@@ -16,7 +16,7 @@ dependencies:
     version: 1.6.3(debug@4.3.4)
   ethers:
     specifier: ^6.9.0
-    version: 6.9.1
+    version: 6.10.0
   uuid:
     specifier: ^9.0.1
     version: 9.0.1
@@ -24,10 +24,10 @@ dependencies:
 devDependencies:
   '@nomicfoundation/hardhat-ethers':
     specifier: ^3.0.5
-    version: 3.0.5(ethers@6.9.1)(hardhat@2.19.4)
+    version: 3.0.5(ethers@6.10.0)(hardhat@2.19.4)
   '@openzeppelin/hardhat-upgrades':
     specifier: ^3.0.1
-    version: 3.0.1(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-verify@2.0.3)(ethers@6.9.1)(hardhat@2.19.4)
+    version: 3.0.1(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-verify@2.0.3)(ethers@6.10.0)(hardhat@2.19.4)
   '@types/node':
     specifier: ^18.17.0
     version: 18.19.3
@@ -658,14 +658,14 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@nomicfoundation/hardhat-ethers@3.0.5(ethers@6.9.1)(hardhat@2.19.4):
+  /@nomicfoundation/hardhat-ethers@3.0.5(ethers@6.10.0)(hardhat@2.19.4):
     resolution: {integrity: sha512-RNFe8OtbZK6Ila9kIlHp0+S80/0Bu/3p41HUpaRIoHLm6X3WekTd83vob3rE54Duufu1edCiBDxspBzi2rxHHw==}
     peerDependencies:
       ethers: ^6.1.0
       hardhat: ^2.0.0
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
-      ethers: 6.9.1
+      ethers: 6.10.0
       hardhat: 2.19.4(ts-node@10.9.2)(typescript@5.3.3)
       lodash.isequal: 4.5.0
     transitivePeerDependencies:
@@ -958,7 +958,7 @@ packages:
       - encoding
     dev: true
 
-  /@openzeppelin/hardhat-upgrades@3.0.1(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-verify@2.0.3)(ethers@6.9.1)(hardhat@2.19.4):
+  /@openzeppelin/hardhat-upgrades@3.0.1(@nomicfoundation/hardhat-ethers@3.0.5)(@nomicfoundation/hardhat-verify@2.0.3)(ethers@6.10.0)(hardhat@2.19.4):
     resolution: {integrity: sha512-NtD2/n2PKNqHBafQy3AM6KCvsDZD0w97po7fFa4wctl0fg/8QwGAg3fB8InkBFEhGn17+IgshRI8G94hUrFPcQ==}
     hasBin: true
     peerDependencies:
@@ -970,7 +970,7 @@ packages:
       '@nomicfoundation/hardhat-verify':
         optional: true
     dependencies:
-      '@nomicfoundation/hardhat-ethers': 3.0.5(ethers@6.9.1)(hardhat@2.19.4)
+      '@nomicfoundation/hardhat-ethers': 3.0.5(ethers@6.10.0)(hardhat@2.19.4)
       '@nomicfoundation/hardhat-verify': 2.0.3(hardhat@2.19.4)
       '@openzeppelin/defender-admin-client': 1.54.1(debug@4.3.4)
       '@openzeppelin/defender-base-client': 1.54.1(debug@4.3.4)
@@ -980,7 +980,7 @@ packages:
       chalk: 4.1.2
       debug: 4.3.4(supports-color@8.1.1)
       ethereumjs-util: 7.1.5
-      ethers: 6.9.1
+      ethers: 6.10.0
       hardhat: 2.19.4(ts-node@10.9.2)(typescript@5.3.3)
       proper-lockfile: 4.1.2
       undici: 5.28.2
@@ -2358,8 +2358,8 @@ packages:
       - bufferutil
       - utf-8-validate
 
-  /ethers@6.9.1:
-    resolution: {integrity: sha512-kuV8fGd4/8Gj7wkurbsuUsm1DCG6N5gKGYdw3fnWG/7QGknhy1xtHD7kbkCWQAcbAYmzLCLqCPedS3FYncFkKQ==}
+  /ethers@6.10.0:
+    resolution: {integrity: sha512-nMNwYHzs6V1FR3Y4cdfxSQmNgZsRj1RiTU25JwvnJLmyzw9z3SKxNc2XKDuiXXo/v9ds5Mp9m6HBabgYQQ26tA==}
     engines: {node: '>=14.0.0'}
     dependencies:
       '@adraffy/ens-normalize': 1.10.0

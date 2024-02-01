@@ -1,4 +1,10 @@
-import { Contract, JsonRpcProvider, SigningKey, Wallet } from 'ethers'
+import {
+  Contract,
+  JsonRpcProvider,
+  SigningKey,
+  Wallet,
+  Network
+} from 'ethers'
 import { parseDid, validateDid } from './utils/did'
 import { v4 as uuidv4 } from 'uuid'
 import SchemaRegistryAbi from './abi/SchemaRegistry.json'
@@ -32,6 +38,17 @@ export type ResourcePayload = {
   checksum: string
   previousVersionId: string | null
   nextVersionId: string | null
+}
+
+export type EstimatedTxDetails = {
+  transactionFee: string
+  gasLimit: string
+  gasPrice: string
+  maxFeePerGas: number
+  maxPriorityFeePerGas: number
+  network: string
+  chainId: string
+  method: string
 }
 
 export class PolygonSchema {
@@ -216,4 +233,81 @@ export class PolygonSchema {
       throw error
     }
   }
+
+  public async estimateTxFee(
+    contractAddress: string,
+    method: string,
+    argument: string[],
+    rpcUrl: string,
+  ): Promise<EstimatedTxDetails | null> {
+    try {
+      const provider = new JsonRpcProvider(rpcUrl);
+      const contract = new Contract(
+        contractAddress,
+        SchemaRegistryAbi,
+        provider,
+      );
+
+      // Encode function data
+      const encodedFunction = await contract.interface.encodeFunctionData(
+        method,
+        argument,
+      );
+
+      // Check if encodedFunction is null or empty
+      if (!encodedFunction) {
+        throw new Error('Error while getting encoded function details');
+      }
+
+      // Estimate gas limit
+      const gasLimit = await provider.estimateGas({
+        to: contractAddress,
+        data: encodedFunction,
+      });
+
+      // Convert gas limit to Gwei
+      const gasLimitGwei = parseFloat(String(gasLimit)) / 1e9;
+
+      // Get gas price details
+      const gasPriceDetails = await provider.getFeeData();
+
+      // Check if gas price details are available
+      if (!gasPriceDetails || !gasPriceDetails.gasPrice) {
+        throw new Error('Gas price details not found!');
+      }
+
+      // Convert gas price to Gwei
+      const gasPriceGwei = parseFloat(String(gasPriceDetails.gasPrice)) / 1e9;
+
+      // Get network details
+      const networkDetails: Network = await provider.getNetwork();
+
+      // Check if network details are available
+      if (!networkDetails) {
+        throw new Error('Network details not found!');
+      }
+
+      // Calculate transaction fee
+      const transactionFee = gasLimitGwei * gasPriceGwei;
+
+      // Create EstimatedTxDetails object
+      const estimatedTxDetails: EstimatedTxDetails = {
+        transactionFee: String(transactionFee),
+        gasLimit: String(gasLimitGwei),
+        gasPrice: String(gasPriceGwei),
+        maxFeePerGas: parseFloat(String(gasPriceDetails.maxFeePerGas)) / 1e9,
+        maxPriorityFeePerGas:
+          parseFloat(String(gasPriceDetails.maxPriorityFeePerGas)) / 1e9,
+        network: String(networkDetails.name),
+        chainId: String(networkDetails.chainId),
+        method,
+      };
+      
+      return estimatedTxDetails;
+    } catch (error) {
+      console.error('Error calculating transaction fee:', error);
+      return null;
+    }
+  }
+
 }

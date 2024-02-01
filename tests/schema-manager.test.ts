@@ -9,13 +9,14 @@ import { describe, it, before } from 'node:test'
 import assert from 'node:assert'
 import { arrayHasKeys } from './utils/array'
 import { PolygonSchema } from '../src/schema-manager'
+import { SigningKey } from 'ethers'
 
 const NETWORK_URL = testContractDetails.networkUrl
 const DID_REGISTRAR_CONTRACT_ADDRESS = testContractDetails.contractAddress
 const SCHEMA_MANAGER_CONTRACT_ADDRESS =
   testContractDetails.schemaManagerContract
 
-describe('Registrar', () => {
+describe('Schema Manager', () => {
   let polygonSchemaManager: PolygonSchema
   let polygonDID: string
 
@@ -25,7 +26,7 @@ describe('Registrar', () => {
       didRegistrarContractAddress: DID_REGISTRAR_CONTRACT_ADDRESS,
       schemaManagerContractAddress: SCHEMA_MANAGER_CONTRACT_ADDRESS,
       rpcUrl: NETWORK_URL,
-      privateKey: testDidDetails.privateKey,
+      signingKey: new SigningKey(`0x${testDidDetails.privateKey}`),
       serverUrl: fileServerUrl,
       fileServerToken: fileServerAccessToken,
     })
@@ -117,6 +118,54 @@ describe('Registrar', () => {
 
       assert.ok(schemaDetail.resourceType)
       assert.strictEqual(schemaDetail.resourceType, 'W3C-schema')
+    })
+  })
+
+  describe('test estimate transaction', () => {
+    let transactionDetails: any
+
+    before(async () => {
+      transactionDetails = await polygonSchemaManager.estimateTxFee(
+        testContractDetails.schemaManagerContract,
+        'createSchema',
+        [
+          '0x13cd23928Ae515b86592C630f56C138aE4c7B79a',
+          '68768734687ytruwytuqyetrywqt',
+          'ertyuioiuytyuiuyt',
+        ],
+        testContractDetails.networkUrl,
+      )
+    })
+
+    it('should have non-empty values for transaction details', () => {
+      assert.ok(transactionDetails)
+
+      assert.ok(transactionDetails.transactionFee)
+      assert.notStrictEqual(
+        transactionDetails.transactionFee,
+        '' || null || undefined,
+      )
+
+      assert.ok(transactionDetails.gasLimit)
+      assert.notStrictEqual(
+        transactionDetails.gasLimit,
+        '' || null || undefined,
+      )
+
+      assert.ok(transactionDetails.gasPrice)
+      assert.notStrictEqual(
+        transactionDetails.gasPrice,
+        '' || null || undefined,
+      )
+
+      assert.ok(transactionDetails.network)
+      assert.notStrictEqual(transactionDetails.network, '' || null || undefined)
+
+      assert.ok(transactionDetails.chainId)
+      assert.notStrictEqual(transactionDetails.chainId, '' || null || undefined)
+
+      assert.ok(transactionDetails.method)
+      assert.notStrictEqual(transactionDetails.method, '' || null || undefined)
     })
   })
 })
