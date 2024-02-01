@@ -126,14 +126,12 @@ describe('Schema Manager', () => {
 
     before(async () => {
       transactionDetails = await polygonSchemaManager.estimateTxFee(
-        testContractDetails.schemaManagerContract,
         'createSchema',
         [
           '0x13cd23928Ae515b86592C630f56C138aE4c7B79a',
           '68768734687ytruwytuqyetrywqt',
           'ertyuioiuytyuiuyt',
-        ],
-        testContractDetails.networkUrl,
+        ]
       )
     })
 

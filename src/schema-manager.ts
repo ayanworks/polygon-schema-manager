@@ -50,6 +50,8 @@ export class PolygonSchema {
   private schemaRegistry: Contract
   private fileServerUrl: string
   private accessToken: string
+  private schemaManagerContractAddress: string
+  private rpcUrl: string
 
   public constructor({
     didRegistrarContractAddress,
@@ -59,6 +61,8 @@ export class PolygonSchema {
     fileServerToken,
     signingKey,
   }: PolygonDidInitOptions) {
+    this.schemaManagerContractAddress = schemaManagerContractAddress
+    this.rpcUrl = rpcUrl
     const provider = new JsonRpcProvider(rpcUrl)
     const wallet = new Wallet(signingKey, provider)
     this.didRegistry = new Contract(
@@ -229,15 +233,13 @@ export class PolygonSchema {
   }
 
   public async estimateTxFee(
-    contractAddress: string,
     method: string,
     argument: string[],
-    rpcUrl: string,
   ): Promise<EstimatedTxDetails | null> {
     try {
-      const provider = new JsonRpcProvider(rpcUrl)
+      const provider = new JsonRpcProvider(this.rpcUrl)
       const contract = new Contract(
-        contractAddress,
+        this.schemaManagerContractAddress,
         SchemaRegistryAbi,
         provider,
       )
@@ -255,7 +257,7 @@ export class PolygonSchema {
 
       // Estimate gas limit
       const gasLimit = await provider.estimateGas({
-        to: contractAddress,
+        to: this.schemaManagerContractAddress,
         data: encodedFunction,
       })
 
