@@ -200,7 +200,9 @@ export class PolygonSchema {
         parsedDid.didAddress,
         schemaId,
       )
-
+      if (!schemaDetails) {
+        throw new Error('Error while fetching schema details by schema id!')
+      }
       return JSON.parse(schemaDetails)
     } catch (error) {
       console.log(`Error occurred in createSchema function ${error} `)
