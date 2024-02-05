@@ -111,6 +111,7 @@ export class PolygonSchema {
         did,
         schemaId,
         schemaName,
+        schema,
       )
 
       const schemaTxnReceipt = await this.schemaRegistry.createSchema(
@@ -302,6 +303,28 @@ export class PolygonSchema {
       return estimatedTxDetails
     } catch (error) {
       console.error('Error calculating transaction fee:', error)
+      return null
+    }
+  }
+
+  public async validateSchemaObject(json: Record<string, any>) {
+    try {
+      if (typeof json !== 'object' || json === null) {
+        throw new Error('Schema object is not a valid JSON!')
+      }
+      // Check if @context exists and is an object
+      if (
+        !('@context' in json) || // Check if '@context' property exists
+        (typeof json['@context'] !== 'object' &&
+          !Array.isArray(json['@context'])) || // Check if '@context' is neither an object nor an array
+        json['@context'] === null // Check if '@context' is null
+      ) {
+        throw new Error('Invalid schema context!')
+      }
+
+      return true
+    } catch (error) {
+      console.error('Error validating schema JSON:', error)
       return null
     }
   }

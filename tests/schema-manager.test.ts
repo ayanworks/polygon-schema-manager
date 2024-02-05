@@ -4,6 +4,7 @@ import {
   fileServerUrl,
   fileServerAccessToken,
   testSchemaId,
+  testSchemaSample,
 } from './fixtures/test.data'
 import { describe, it, before } from 'node:test'
 import assert from 'node:assert'
@@ -39,7 +40,7 @@ describe('Schema Manager', () => {
     registeredSchemaDetails = await polygonSchemaManager.createSchema(
       testDidDetails.did,
       'PAN CARD',
-      {},
+      testSchemaSample,
     )
   })
 
@@ -164,6 +165,21 @@ describe('Schema Manager', () => {
 
       assert.ok(transactionDetails.method)
       assert.notStrictEqual(transactionDetails.method, '' || null || undefined)
+    })
+  })
+
+  describe('test schema validator', () => {
+    let isValidatedSchema: any
+
+    before(async () => {
+      isValidatedSchema =
+        await polygonSchemaManager.validateSchemaObject(testSchemaSample)
+    })
+    it('should have validate the schema JSON', () => {
+      assert.ok(isValidatedSchema)
+
+      assert.ok(isValidatedSchema)
+      assert.strictEqual(isValidatedSchema, true)
     })
   })
 })
