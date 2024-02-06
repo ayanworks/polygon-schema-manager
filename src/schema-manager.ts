@@ -106,8 +106,8 @@ export class PolygonSchema {
       }
       const parsedDid = parseDid(did)
 
-      const didDocument = await this.resolver.resolve(did)
-      if (!didDocument.didDocument) {
+      const didDetails = await this.resolver.resolve(did)
+      if (!didDetails.didDocument) {
         throw new Error(`The DID document for the given DID was not found!`)
       }
 
