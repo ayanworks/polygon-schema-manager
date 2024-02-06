@@ -5,6 +5,8 @@ import SchemaRegistryAbi from './abi/SchemaRegistry.json'
 import { buildSchemaResource } from './utils/schemaHelper'
 import DidRegistryContract from '@ayanworks/polygon-did-registry-contract'
 import axios from 'axios'
+import { getResolver } from '@ayanworks/polygon-did-resolver'
+import { Resolver } from 'did-resolver'
 
 export type PolygonDidInitOptions = {
   didRegistrarContractAddress: string
@@ -52,6 +54,7 @@ export class PolygonSchema {
   private accessToken: string
   private schemaManagerContractAddress: string
   private rpcUrl: string
+  public resolver: Resolver
 
   public constructor({
     didRegistrarContractAddress,
@@ -61,6 +64,7 @@ export class PolygonSchema {
     fileServerToken,
     signingKey,
   }: PolygonDidInitOptions) {
+    this.resolver = new Resolver(getResolver())
     this.schemaManagerContractAddress = schemaManagerContractAddress
     this.rpcUrl = rpcUrl
     const provider = new JsonRpcProvider(rpcUrl)
@@ -102,10 +106,11 @@ export class PolygonSchema {
       }
       const parsedDid = parseDid(did)
 
-      const didDocument = await this.didRegistry.getDIDDoc(parsedDid.didAddress)
-      if (!didDocument[0]) {
+      const didDocument = await this.resolver.resolve(did)
+      if (!didDocument.didDocument) {
         throw new Error(`The DID document for the given DID was not found!`)
       }
+
       schemaId = uuidv4()
       const schemaResource: ResourcePayload = await buildSchemaResource(
         did,
@@ -192,8 +197,8 @@ export class PolygonSchema {
 
       const parsedDid = parseDid(did)
 
-      const didDocument = await this.didRegistry.getDIDDoc(parsedDid.didAddress)
-      if (!didDocument[0]) {
+      const didDetails = await this.resolver.resolve(did)
+      if (!didDetails.didDocument) {
         throw new Error(`The DID document for the given DID was not found!`)
       }
       const schemaDetails = await this.schemaRegistry.getSchemaById(
@@ -206,6 +211,37 @@ export class PolygonSchema {
       return JSON.parse(schemaDetails)
     } catch (error) {
       console.log(`Error occurred in createSchema function ${error} `)
+      throw error
+    }
+  }
+
+  public async getAllSchemaByDID(did: string) {
+    try {
+      const isValidDid = validateDid(did)
+      if (!isValidDid) {
+        throw new Error('invalid did provided')
+      }
+      const didDetails = await this.resolver.resolve(did)
+
+      if (!didDetails?.didDocumentMetadata?.linkedResourceMetadata) {
+        throw new Error(
+          `The DID linked resource metadata for the given DID was not found!`,
+        )
+      }
+      const linkedResourceMetadata =
+        didDetails?.didDocumentMetadata?.linkedResourceMetadata
+      const schemaList: ResourcePayload[] = linkedResourceMetadata.filter(
+        (element: ResourcePayload) => {
+          if (element.resourceType === 'W3C-schema') {
+            return true
+          }
+          return false
+        },
+      )
+
+      return schemaList
+    } catch (error) {
+      console.log(`Error occurred in getAllSchemaByDID function ${error} `)
       throw error
     }
   }
