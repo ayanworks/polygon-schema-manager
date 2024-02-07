@@ -122,7 +122,7 @@ describe('Schema Manager', () => {
     })
   })
 
-  describe('test getSchemaById function', () => {
+  describe('test getAllSchemaByDID function', () => {
     let schemaList: ResourcePayload[]
 
     before(async () => {
@@ -159,8 +159,8 @@ describe('Schema Manager', () => {
         'createSchema',
         [
           '0x13cd23928Ae515b86592C630f56C138aE4c7B79a',
-          '68768734687ytruwytuqyetrywqt',
-          'ertyuioiuytyuiuyt',
+          '550e8400-e29b-41d4-a716-446655440000',
+          'dummy schema details',
         ],
       )
     })

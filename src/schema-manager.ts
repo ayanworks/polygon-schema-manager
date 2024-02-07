@@ -231,14 +231,8 @@ export class PolygonSchema {
       const linkedResourceMetadata =
         didDetails?.didDocumentMetadata?.linkedResourceMetadata
       const schemaList: ResourcePayload[] = linkedResourceMetadata.filter(
-        (element: ResourcePayload) => {
-          if (element.resourceType === 'W3C-schema') {
-            return true
-          }
-          return false
-        },
+        (element: ResourcePayload) => element.resourceType === 'W3C-schema',
       )
-
       return schemaList
     } catch (error) {
       console.log(`Error occurred in getAllSchemaByDID function ${error} `)
