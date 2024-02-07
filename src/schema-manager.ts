@@ -84,6 +84,10 @@ export class PolygonSchema {
   }
 
   public async createSchema(did: string, schemaName: string, schema: object) {
+    if (!schemaName || Object?.keys(schema)?.length === 0) {
+      throw new Error(`Schema name and Schema are required!`)
+    }
+
     let schemaId
     let tnxSchemaId = ''
     let tnxSchemaTxnReceipt: {
@@ -190,6 +194,9 @@ export class PolygonSchema {
 
   public async getSchemaById(did: string, schemaId: string) {
     try {
+      if (!schemaId) {
+        throw new Error(`Schema id is required!`)
+      }
       const isValidDid = validateDid(did)
       if (!isValidDid) {
         throw new Error('invalid did provided')
@@ -224,9 +231,7 @@ export class PolygonSchema {
       const didDetails = await this.resolver.resolve(did)
 
       if (!didDetails?.didDocumentMetadata?.linkedResourceMetadata) {
-        throw new Error(
-          `The DID linked resource metadata for the given DID was not found!`,
-        )
+        return []
       }
       const linkedResourceMetadata =
         didDetails?.didDocumentMetadata?.linkedResourceMetadata
@@ -242,6 +247,9 @@ export class PolygonSchema {
 
   private async uploadSchemaFile(schemaResourceId: string, schema: object) {
     try {
+      if (!schemaResourceId || Object?.keys(schema)?.length === 0) {
+        throw new Error(`Schema resource id and schema are required!`)
+      }
       const schemaPayload = {
         schemaId: `${schemaResourceId}`,
         schema,
@@ -267,9 +275,12 @@ export class PolygonSchema {
 
   public async estimateTxFee(
     method: string,
-    argument: string[],
+    argument?: string[],
   ): Promise<EstimatedTxDetails | null> {
     try {
+      if (!method) {
+        throw new Error(`Method is required for estimate transaction!`)
+      }
       const provider = new JsonRpcProvider(this.rpcUrl)
       const contract = new Contract(
         this.schemaManagerContractAddress,
