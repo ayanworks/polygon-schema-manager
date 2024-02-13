@@ -19,11 +19,12 @@ Methods
   "nextVersionId": null
 }
 ```
+
 # Schema Operations
 
 ## Create Schema
 
- Create a new JSON-LD credential schema. This method allows users to define the structure and properties of the credential schema.
+Create a new JSON-LD credential schema. This method allows users to define the structure and properties of the credential schema.
 
 ```js
 import { createSchema } from 'polygon-schema-manager'
@@ -33,7 +34,8 @@ const txDetails = await createSchema(did, schemaName, schema)
 The function returns, did, schemaId,and txnReceipt.
 
 ## Get Schema by ID
- Retrieves schema details by its unique ID.
+
+Retrieves schema details by its unique ID.
 
 ```js
 import { getSchemaById } from 'polygon-schema-manager'
@@ -44,14 +46,14 @@ The function returns Schema details including resourceURI, resourceCollectionId,
 
 ## Get All Schemas by DID
 
-  Retrieves all schemas associated with a specific DID.
+Retrieves all schemas associated with a specific DID.
 
 ```js
 import { getSchemaById } from 'polygon-schema-manager'
 const schemaDetails = await getSchemaById(did)
 ```
 
-The function returns  Array of schema objects with essential keys..
+The function returns Array of schema objects with essential keys..
 
 ## Estimate Transaction
 
