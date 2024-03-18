@@ -90,7 +90,7 @@ export class PolygonSchema {
 
     let schemaId
     let tnxSchemaId = ''
-    let schemaTxhash:string = ''
+    let schemaTxhash: string = ''
 
     if (!this.accessToken) {
       throw new Error(`Invalid token!`)
