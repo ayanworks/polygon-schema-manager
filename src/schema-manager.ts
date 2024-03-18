@@ -156,7 +156,7 @@ export class PolygonSchema {
         did,
         schemaId,
         schemaTxnHash: schemaTxnReceipt.hash,
-        resourceTxnHash: addedResourcetxnReceipt.hash
+        resourceTxnHash: addedResourcetxnReceipt.hash,
       }
     } catch (error) {
       console.log(`Error occurred in createSchema function ${error} `)
