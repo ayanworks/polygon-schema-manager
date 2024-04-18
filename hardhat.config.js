@@ -24,7 +24,7 @@ module.exports = {
     amoy: {
       url: process.env.AMOY_RPCURL,
       accounts: [`0x${process.env.SIGNER}`],
-    }
+    },
     //Use for mainnet deployment
     // polygon: {
     //   url: process.env.RPCURL_POLYON_MAINNET,
