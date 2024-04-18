@@ -21,10 +21,10 @@ module.exports = {
   },
   networks: {
     hardhat: {},
-    mumbai: {
-      url: process.env.RPCURL_POLYGON_MUMBAI,
+    amoy: {
+      url: process.env.AMOY_RPCURL,
       accounts: [`0x${process.env.SIGNER}`],
-    },
+    }
     //Use for mainnet deployment
     // polygon: {
     //   url: process.env.RPCURL_POLYON_MAINNET,
