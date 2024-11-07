@@ -1,6 +1,6 @@
 {
   "name": "@ayanworks/polygon-schema-manager",
-  "version": "1.0.0",
+  "version": "2.0.0-alpha.0",
   "description": "Polygon schema manager",
   "main": "build/index.js",
   "files": [
@@ -22,7 +22,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@ayanworks/polygon-did-registry-contract": "3.0.0",
-    "@ayanworks/polygon-did-resolver": "1.0.0",
+    "@ayanworks/polygon-did-resolver": "2.0.1-alpha.0",
     "@nomicfoundation/hardhat-verify": "^2.0.3",
     "axios": "^1.6.3",
     "did-resolver": "^4.1.0",
