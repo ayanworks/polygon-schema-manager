@@ -91,8 +91,8 @@ packages:
   '@ayanworks/polygon-did-registry-contract@3.0.0':
     resolution: {integrity: sha512-RnW31nkDIMG1YzuOycxGGrJFpgTcpBwS/UZR6/wMPrsJBKBEN28k2CZImwXkbgaknyTfL7xe1u3C8NxfDvhI4Q==}
 
-  '@ayanworks/polygon-did-resolver@1.0.0':
-    resolution: {integrity: sha512-mzYh3XNQ4HJ0GakP1QD7UOW8PjMAhdtu/TXzeOqMtHLhWktFMQcgJuqNMNxMGbJFdIe12qFJROlle6p1BjF01g==}
+  '@ayanworks/polygon-did-resolver@2.0.1-alpha.0':
+    resolution: {integrity: sha512-W3S8iVblLtROspEGbYaBRuhtXMiiXPSjO78x7SvkK9X10ESr2mvBFYbWTMJe+0yjK1l4Ac64n/BArVq3RVBjZQ==}
 
   '@babel/code-frame@7.23.5':
     resolution: {integrity: sha512-CgH3s1a96LipHCmSUmYFPwY7MNx8C3avkq7i4Wl3cfa662ldtUe4VM1TPXX70pfmrlWTb6jLqTYrZyT2ZTJBgA==}
@@ -2975,7 +2975,7 @@ snapshots:
 
   '@ayanworks/polygon-did-registry-contract@3.0.0': {}
 
-  '@ayanworks/polygon-did-resolver@1.0.0':
+  '@ayanworks/polygon-did-resolver@2.0.1-alpha.0':
     dependencies:
       '@ayanworks/polygon-did-registry-contract': 3.0.0
       did-resolver: 4.1.0
