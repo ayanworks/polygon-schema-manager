@@ -12,8 +12,8 @@ importers:
         specifier: 3.0.0
         version: 3.0.0
       '@ayanworks/polygon-did-resolver':
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 2.0.1-alpha.0
+        version: 2.0.1-alpha.0
       '@nomicfoundation/hardhat-verify':
         specifier: ^2.0.3
         version: 2.0.3(hardhat@2.19.4(ts-node@10.9.2(@types/node@18.19.3)(typescript@5.3.3))(typescript@5.3.3))
