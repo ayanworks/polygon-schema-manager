@@ -121,6 +121,8 @@ export class PolygonSchema {
         schemaId,
         JSON.stringify(schemaResource),
       )
+      // To change the nonce for next transaction
+      await schemaTxnReceipt.wait()
 
       if (!schemaTxnReceipt.hash) {
         throw new Error(`Error while adding schema in Registry!`)
@@ -131,8 +133,6 @@ export class PolygonSchema {
       if (!uploadSchemaDetails) {
         throw new Error(`Error while uploading schema on file server!`)
       }
-      // To change the nonce for next transaction
-      await new Promise((resolve) => setTimeout(resolve, 4000))
       const addedResourcetxnReceipt = await this.didRegistry.addResource(
         parsedDid.didAddress,
         schemaId,
