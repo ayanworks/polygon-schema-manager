@@ -1,3 +1,12 @@
+# ⚠️ ARCHIVED REPOSITORY
+
+This repository is being archived. For the latest features, security updates, and active development, please see the up-to-date version here:
+
+👉 **[https://github.com/ayanworks/polygon-did-modules](https://github.com/ayanworks/polygon-did-modules)**
+
+---
+
+
 # Polygon schema registrar
 
 This GitHub repository is dedicated to creating W3C-compliant schemas for JSON-LD credentials, facilitating interoperability and standardization in digital credentialing.
